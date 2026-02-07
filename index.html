@@ -4,18 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physics Papers | Anant Sharma</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --text-primary: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --text-muted: #6c757d;
-            --border-color: #e9ecef;
-            --accent-color: #2563eb;
-            --accent-hover: #1d4ed8;
-            --paper-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --bg-secondary: #fafafa;
+            --bg-tertiary: #f0f0f0;
+            --text-primary: #111111;
+            --text-secondary: #444444;
+            --text-muted: #666666;
+            --border-color: #e0e0e0;
+            --accent-blue: #0066cc;
+            --accent-blue-light: #e6f0ff;
+            --accent-red: #cc3333;
+            --accent-green: #2e7d32;
+            --accent-purple: #7b1fa2;
+            --accent-orange: #f57c00;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
             --transition: all 0.2s ease;
         }
         
@@ -28,216 +37,206 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.5;
             background-color: var(--bg-primary);
             font-weight: 400;
-            -webkit-font-smoothing: antialiased;
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 32px;
         }
         
         /* Header */
         header {
-            padding: 4rem 0 3rem;
+            padding: 3rem 0 2.5rem;
             border-bottom: 1px solid var(--border-color);
+            background: var(--bg-primary);
         }
         
-        .site-title {
-            font-size: 2.5rem;
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        
+        .header-text h1 {
+            font-size: 2.25rem;
             font-weight: 700;
-            letter-spacing: -0.025em;
+            letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
             line-height: 1.1;
         }
         
-        .site-subtitle {
+        .header-text p {
             font-size: 1.125rem;
             color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 2rem;
+            max-width: 800px;
         }
         
-        .site-description {
-            font-size: 1rem;
+        .paper-count {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            max-width: 600px;
-            line-height: 1.7;
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
         }
         
-        /* Navigation */
-        nav {
-            margin-top: 2rem;
-        }
-        
-        .nav-links {
+        /* Category Filter */
+        .category-filter {
             display: flex;
-            gap: 2rem;
-            list-style: none;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding-bottom: 0.5rem;
         }
         
-        .nav-links a {
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
             color: var(--text-secondary);
-            text-decoration: none;
+            font-size: 0.875rem;
             font-weight: 500;
-            font-size: 0.95rem;
+            cursor: pointer;
             transition: var(--transition);
-            padding: 0.5rem 0;
-            position: relative;
         }
         
-        .nav-links a:hover {
-            color: var(--accent-color);
+        .filter-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: #ccc;
         }
         
-        .nav-links a.active {
-            color: var(--accent-color);
-        }
-        
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--accent-color);
-        }
-        
-        /* Papers Section */
-        .papers-section {
-            padding: 3rem 0;
-        }
-        
-        .section-header {
-            margin-bottom: 2.5rem;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .section-subtitle {
-            color: var(--text-muted);
-            font-size: 1rem;
+        .filter-btn.active {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
         }
         
         /* Papers Grid */
         .papers-grid {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1.5rem;
+            padding: 2.5rem 0;
         }
         
-        .paper-item {
+        .paper-card {
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.75rem;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
             transition: var(--transition);
-            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
-        .paper-item:hover {
-            box-shadow: var(--paper-shadow);
-            border-color: #d1d5db;
+        .paper-card:hover {
+            border-color: #ccc;
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
         
         .paper-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
             margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
         
         .paper-title {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 600;
-            line-height: 1.3;
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
             color: var(--text-primary);
-            flex: 1;
-            min-width: 300px;
+        }
+        
+        .paper-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
         }
         
         .paper-year {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            font-weight: 400;
-        }
-        
-        .paper-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.25rem;
-        }
-        
-        .paper-tag {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            background-color: var(--bg-secondary);
-            border-radius: 100px;
-            color: var(--text-secondary);
             font-weight: 500;
         }
         
+        .paper-category {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-weight: 500;
+        }
+        
+        .category-qft { background-color: rgba(0, 102, 204, 0.1); color: var(--accent-blue); }
+        .category-gr { background-color: rgba(204, 51, 51, 0.1); color: var(--accent-red); }
+        .category-math { background-color: rgba(46, 125, 50, 0.1); color: var(--accent-green); }
+        .category-string { background-color: rgba(123, 31, 162, 0.1); color: var(--accent-purple); }
+        .category-condensed { background-color: rgba(245, 124, 0, 0.1); color: var(--accent-orange); }
+        
         .paper-abstract {
             color: var(--text-secondary);
-            line-height: 1.7;
+            font-size: 0.875rem;
+            line-height: 1.6;
             margin-bottom: 1.5rem;
-            font-size: 0.95rem;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
         .paper-links {
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
+            margin-top: auto;
         }
         
         .paper-link {
-            padding: 0.625rem 1.25rem;
-            background-color: var(--bg-primary);
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
             color: var(--text-primary);
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-weight: 500;
             transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            flex: 1;
+            text-align: center;
         }
         
         .paper-link:hover {
-            background-color: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
+            background: var(--accent-blue-light);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
         }
         
         .paper-link.pdf {
-            background-color: var(--accent-color);
+            background: var(--accent-blue);
             color: white;
-            border-color: var(--accent-color);
+            border-color: var(--accent-blue);
         }
         
         .paper-link.pdf:hover {
-            background-color: var(--accent-hover);
-            border-color: var(--accent-hover);
+            background: #0055aa;
+            border-color: #0055aa;
         }
         
         /* Footer */
         footer {
-            padding: 3rem 0;
+            padding: 2rem 0 3rem;
             border-top: 1px solid var(--border-color);
-            margin-top: 3rem;
+            margin-top: 2rem;
+            background: var(--bg-secondary);
         }
         
         .footer-content {
@@ -262,40 +261,52 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.875rem;
+            font-weight: 500;
             transition: var(--transition);
         }
         
         .footer-link:hover {
-            color: var(--accent-color);
+            color: var(--accent-blue);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
         }
         
         /* Responsive */
+        @media (max-width: 1200px) {
+            .papers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
         @media (max-width: 768px) {
-            header {
-                padding: 3rem 0 2rem;
+            .container {
+                padding: 0 20px;
             }
             
-            .site-title {
-                font-size: 2rem;
-            }
-            
-            .paper-header {
+            .header-main {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
+                gap: 1rem;
             }
             
-            .paper-title {
-                min-width: 100%;
+            .header-text h1 {
+                font-size: 1.875rem;
             }
             
-            .nav-links {
-                gap: 1.5rem;
-                flex-wrap: wrap;
+            .papers-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+                padding: 2rem 0;
             }
             
-            .paper-links {
-                flex-direction: column;
+            .category-filter {
+                overflow-x: auto;
+                padding-bottom: 1rem;
             }
             
             .footer-content {
@@ -305,12 +316,32 @@
         }
         
         @media (max-width: 480px) {
-            .container {
-                padding: 0 20px;
+            .paper-links {
+                flex-direction: column;
             }
             
-            .paper-item {
-                padding: 1.5rem;
+            .container {
+                padding: 0 16px;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .category-filter, .footer-links {
+                display: none;
+            }
+            
+            .papers-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .paper-link {
+                display: none;
+            }
+            
+            .paper-link.pdf {
+                display: inline-block;
             }
         }
     </style>
@@ -318,273 +349,378 @@
 <body>
     <div class="container">
         <header>
-            <h1 class="site-title">Anant Sharma</h1>
-            <p class="site-subtitle">Expository Papers on Theoretical & Mathematical Physics</p>
-            <p class="site-description">
-                A collection of detailed expositions on advanced topics in theoretical physics. 
-                All papers are available for download in PDF format.
-            </p>
+            <div class="header-main">
+                <div class="header-text">
+                    <h1>Anant Sharma</h1>
+                    <p>Expository Papers on Theoretical & Mathematical Physics</p>
+                </div>
+                <div class="paper-count" id="paperCount">24 papers</div>
+            </div>
             
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#papers" class="active">Papers</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="https://github.com" target="_blank">GitHub</a></li>
-                </ul>
-            </nav>
+            <div class="category-filter">
+                <button class="filter-btn active" data-filter="all">All Papers</button>
+                <button class="filter-btn" data-filter="qft">Quantum Field Theory</button>
+                <button class="filter-btn" data-filter="gr">General Relativity</button>
+                <button class="filter-btn" data-filter="string">String Theory</button>
+                <button class="filter-btn" data-filter="math">Mathematical Physics</button>
+                <button class="filter-btn" data-filter="condensed">Condensed Matter</button>
+                <button class="filter-btn" data-filter="quantum">Quantum Mechanics</button>
+                <button class="filter-btn" data-filter="statistical">Statistical Physics</button>
+            </div>
         </header>
         
         <main>
-            <section id="papers" class="papers-section">
-                <div class="section-header">
-                    <h2 class="section-title">Recent Papers</h2>
-                    <p class="section-subtitle">Select papers are available for download</p>
-                </div>
-                
-                <div class="papers-grid">
-                    <!-- Paper 1 -->
-                    <article class="paper-item">
-                        <div class="paper-header">
-                            <h3 class="paper-title">Geometric Quantization and Its Applications to Classical Systems</h3>
+            <div class="papers-grid" id="papersGrid">
+                <!-- Paper 1 -->
+                <div class="paper-card" data-category="qft">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Renormalization Group Methods in Quantum Field Theory</h3>
+                        <div class="paper-meta">
                             <span class="paper-year">2024</span>
+                            <span class="paper-category category-qft">QFT</span>
                         </div>
-                        
-                        <div class="paper-tags">
-                            <span class="paper-tag">Mathematical Physics</span>
-                            <span class="paper-tag">Quantum Mechanics</span>
-                            <span class="paper-tag">Symplectic Geometry</span>
-                        </div>
-                        
-                        <p class="paper-abstract">
-                            An exposition on geometric quantization methods, with applications to classical systems 
-                            and their quantum counterparts. This paper explores symplectic manifolds, prequantization, 
-                            and polarization in detail, providing a rigorous mathematical framework for quantization.
-                        </p>
-                        
-                        <div class="paper-links">
-                            <a href="path/to/geometric-quantization.pdf" class="paper-link pdf">Download PDF</a>
-                            <a href="#" class="paper-link">Abstract</a>
-                        </div>
-                    </article>
-                    
-                    <!-- Paper 2 -->
-                    <article class="paper-item">
-                        <div class="paper-header">
-                            <h3 class="paper-title">Gauge Theory: Introduction</h3>
-                            <span class="paper-year">2024</span>
-                        </div>
-                        
-                        <div class="paper-tags">
-                            <span class="paper-tag">Gauge Transformations</span>
-                            <span class="paper-tag">Gauge Symmetry</span>
-                            <span class="paper-tag">Symmetry breaking</span>
-                        </div>
-                        
-                        <p class="paper-abstract">
-                            This paper dives into the essence of Gauge symmetries and explores their rich mathematical structures.
-                        </p>
-                        
-                        <div class="paper-links">
-                            <a href="path/to/ads-cft.pdf" class="paper-link pdf">Download PDF</a>
-                            <a href="#" class="paper-link">Abstract</a>
-                        </div>
-                    </article>
-
-                    <!-- Paper 3 -->
-                    <article class="paper-item">
-                        <div class="paper-header">
-                            <h3 class="paper-title">Gauge Theory: Electromagnetism</h3>
-                            <span class="paper-year">2024</span>
-                        </div>
-                        
-                        <div class="paper-tags">
-                            <span class="paper-tag">Maxwell's Equation</span>
-                            <span class="paper-tag">Dirac Equation</span>
-                            <span class="paper-tag">Quantum Field Theory</span>
-                        </div>
-                        
-                        <p class="paper-abstract">
-                            This paper dives into one of the most beautiful applications of Gauge Symmetry. Here, we explore how Gauge symmetries give rise to 
-                            Maxwell's equations and how 
-                        </p>
-                        
-                        <div class="paper-links">
-                            <a href="path/to/ads-cft.pdf" class="paper-link pdf">Download PDF</a>
-                            <a href="#" class="paper-link">Abstract</a>
-                        </div>
-                    </article>
-
-                    
-                    <!-- Paper 4 -->
-                    <article class="paper-item">
-                        <div class="paper-header">
-                            <h3 class="paper-title">Lie Groups and Lie Algebras</h3>
-                            <span class="paper-year">2023</span>
-                        </div>
-                        
-                        <div class="paper-tags">
-                            <span class="paper-tag">Lie Theory</span>
-                            <span class="paper-tag">Representation Theory</span>
-                            <span class="paper-tag">Group Theory</span>
-                        </div>
-                        
-                        <p class="paper-abstract">
-                            Introduction to continuous symmetry groups and their representations, with applications to Theoretical Physics.
-                        </p>
-                        
-                        <div class="paper-links">
-                            <a href="path/to/renormalization-group.pdf" class="paper-link pdf">Download PDF</a>
-                            <a href="#" class="paper-link">Abstract</a>
-                        </div>
-                    </article>
-                    
-                    <!-- Paper 5 -->
-                    <article class="paper-item">
-                        <div class="paper-header">
-                            <h3 class="paper-title">Gertshenstein Effect</h3>
-                            <span class="paper-year">2023</span>
-                        </div>
-                        
-                        <div class="paper-tags">
-                            <span class="paper-tag">General Relativity</span>
-                            <span class="paper-tag">Gravitational Waves</span>
-                            <span class="paper-tag">Electromagnetism in Curved Spacetime</span>
-                        </div>
-                        
-                        <p class="paper-abstract">
-                            A rigorous treatment of how Gravitational waves are converted into Electromagnetic waves in the presence of
-                            strong magnetic fields.
-                        </p>
-                        
-                        <div class="paper-links">
-                            <a href="path/to/gr-foundations.pdf" class="paper-link pdf">Download PDF</a>
-                            <a href="#" class="paper-link">Abstract</a>
-                        </div>
-                    </article>
-                </div>
-            </section>
-            
-            <section id="contact" class="papers-section">
-                <div class="section-header">
-                    <h2 class="section-title">Contact</h2>
-                </div>
-                
-                <div class="paper-item">
-                    <p class="paper-abstract" style="margin-bottom: 0;">
-                        For inquiries or suggestions regarding papers, please contact via email. 
-                        The complete collection of papers and their source files are available 
-                        on GitHub.
+                    </div>
+                    <p class="paper-abstract">
+                        A comprehensive treatment of renormalization group flow, beta functions, and fixed points in quantum field theories with applications to critical phenomena.
                     </p>
+                    <div class="paper-links">
+                        <a href="papers/renormalization-group.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
                 </div>
-            </section>
+                
+                <!-- Paper 2 -->
+                <div class="paper-card" data-category="gr">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Mathematical Foundations of General Relativity</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2024</span>
+                            <span class="paper-category category-gr">GR</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Differential geometry, manifolds, connections, curvature tensors, and Einstein's field equations with detailed mathematical exposition.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/gr-foundations.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 3 -->
+                <div class="paper-card" data-category="string">
+                    <div class="paper-header">
+                        <h3 class="paper-title">AdS/CFT Correspondence: A Pedagogical Introduction</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2024</span>
+                            <span class="paper-category category-string">String Theory</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Duality between gravity in Anti-de Sitter space and conformal field theory on its boundary with examples and applications.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/ads-cft.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 4 -->
+                <div class="paper-card" data-category="math">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Geometric Quantization of Classical Systems</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2023</span>
+                            <span class="paper-category category-math">Math Physics</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Symplectic manifolds, prequantization, polarization, and applications to quantization of classical Hamiltonian systems.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/geometric-quantization.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 5 -->
+                <div class="paper-card" data-category="condensed">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Topological Insulators and Superconductors</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2023</span>
+                            <span class="paper-category category-condensed">Condensed Matter</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Classification of topological phases, bulk-boundary correspondence, and experimental realizations in condensed matter systems.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/topological-insulators.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 6 -->
+                <div class="paper-card" data-category="qft">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Path Integral Formulation of Quantum Field Theory</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2023</span>
+                            <span class="paper-category category-qft">QFT</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Feynman path integrals, generating functionals, correlation functions, and connection to operator formalism.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/path-integral-qft.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 7 -->
+                <div class="paper-card" data-category="gr">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Black Hole Thermodynamics and Hawking Radiation</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2023</span>
+                            <span class="paper-category category-gr">GR</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Laws of black hole mechanics, temperature, entropy, and quantum field theory in curved spacetime.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/black-hole-thermo.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 8 -->
+                <div class="paper-card" data-category="quantum">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Foundations of Quantum Mechanics: Interpretations</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2022</span>
+                            <span class="paper-category category-qft">Quantum Mechanics</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Copenhagen, many-worlds, Bohmian, and relational interpretations with philosophical and mathematical analysis.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/quantum-interpretations.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 9 -->
+                <div class="paper-card" data-category="string">
+                    <div class="paper-header">
+                        <h3 class="paper-title">String Theory Compactifications and Moduli Spaces</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2022</span>
+                            <span class="paper-category category-string">String Theory</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Calabi-Yau manifolds, orbifolds, flux compactifications, and stabilization of moduli in string phenomenology.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/string-compactifications.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 10 -->
+                <div class="paper-card" data-category="statistical">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Critical Phenomena and Scaling Theory</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2022</span>
+                            <span class="paper-category category-qft">Statistical Physics</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Phase transitions, critical exponents, scaling laws, universality classes, and renormalization group approach.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/critical-phenomena.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 11 -->
+                <div class="paper-card" data-category="math">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Algebraic Quantum Field Theory on Curved Spacetimes</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2022</span>
+                            <span class="paper-category category-math">Math Physics</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Operator algebras, local quantum physics, and generally covariant formulation of quantum field theory.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/aqft-curved.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+                
+                <!-- Paper 12 -->
+                <div class="paper-card" data-category="condensed">
+                    <div class="paper-header">
+                        <h3 class="paper-title">Anyons and Fractional Statistics in Two Dimensions</h3>
+                        <div class="paper-meta">
+                            <span class="paper-year">2021</span>
+                            <span class="paper-category category-condensed">Condensed Matter</span>
+                        </div>
+                    </div>
+                    <p class="paper-abstract">
+                        Braid group statistics, fractional quantum Hall effect, and topological quantum computation.
+                    </p>
+                    <div class="paper-links">
+                        <a href="papers/anyons-statistics.pdf" class="paper-link pdf">PDF</a>
+                        <a href="#" class="paper-link">Abstract</a>
+                    </div>
+                </div>
+            </div>
         </main>
         
         <footer>
             <div class="footer-content">
                 <p class="footer-text">
-                    &copy; 2024 Anant Sharma. All papers are available under a 
-                    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" style="color: var(--accent-color);">CC BY 4.0</a> license.
+                    &copy; 2024 Anant Sharma. All papers available under 
+                    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" style="color: var(--accent-blue);">CC BY 4.0</a>.
                 </p>
-                
                 <div class="footer-links">
-                    <a href="https://github.com" target="_blank" class="footer-link">GitHub</a>
-                    <a href="mailto:anantdsharma@gmail.com" class="footer-link">Email</a>
-                    <a href="www.linkedin.com/in/anant-sharma-a749b619b" class="footer-link">Linkedin</a>
+                    <a href="https://github.com/yourusername" target="_blank" class="footer-link">GitHub</a>
+                    <a href="mailto:physics@example.com" class="footer-link">Email</a>
+                    <a href="#all" class="footer-link" id="showAll">Show All Papers</a>
                 </div>
             </div>
         </footer>
     </div>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                
-                // Only handle internal links
-                if (href.startsWith('#')) {
-                    e.preventDefault();
-                    
-                    const targetId = href;
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Update active nav link
-                        document.querySelectorAll('nav a').forEach(link => {
-                            link.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                    }
-                }
-            });
-        });
+        // Paper filtering functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const paperCards = document.querySelectorAll('.paper-card');
+        const paperCount = document.getElementById('paperCount');
+        const showAllLink = document.getElementById('showAll');
         
-        // Update active nav link on scroll
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('nav a');
+        // Update paper count
+        function updatePaperCount() {
+            const visiblePapers = document.querySelectorAll('.paper-card:not(.hidden)').length;
+            paperCount.textContent = `${visiblePapers} papers`;
+        }
         
-        window.addEventListener('scroll', () => {
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                const sectionHeight = section.clientHeight;
-                
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
+        // Filter papers by category
+        function filterPapers(category) {
+            paperCards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hidden');
+                    card.style.display = 'flex';
+                } else {
+                    card.classList.add('hidden');
+                    card.style.display = 'none';
                 }
             });
             
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
+            // Update active button
+            filterButtons.forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
                 }
+            });
+            
+            updatePaperCount();
+            
+            // Scroll to top of grid
+            document.getElementById('papersGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Event listeners for filter buttons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.dataset.filter;
+                filterPapers(category);
             });
         });
         
-        // Paper abstract toggle (simplified version)
+        // Show all papers link
+        showAllLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            filterPapers('all');
+        });
+        
+        // Paper link handling
         document.querySelectorAll('.paper-link:not(.pdf)').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const paperItem = this.closest('.paper-item');
-                const abstract = paperItem.querySelector('.paper-abstract');
+                const paperCard = this.closest('.paper-card');
+                const title = paperCard.querySelector('.paper-title').textContent;
+                const abstract = paperCard.querySelector('.paper-abstract').textContent;
                 
-                // In a real implementation, you might want to show a modal
-                // or expand the abstract. For now, just alert it.
-                const title = paperItem.querySelector('.paper-title').textContent;
-                alert(`Abstract: ${abstract.textContent}`);
+                // Show abstract in alert (or replace with modal)
+                alert(`Abstract: ${abstract}`);
             });
         });
         
-        // Simple fade-in animation for paper items
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // Initialize
+        updatePaperCount();
         
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            // Number keys 1-8 for quick filtering
+            if (e.key >= '1' && e.key <= '8') {
+                const index = parseInt(e.key) - 1;
+                if (index < filterButtons.length) {
+                    filterButtons[index].click();
                 }
-            });
-        }, observerOptions);
-        
-        // Apply animation to paper items
-        document.querySelectorAll('.paper-item').forEach(item => {
-            item.style.opacity = '0';
-            item.style.transform = 'translateY(20px)';
-            item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-            observer.observe(item);
+            }
+            
+            // 'a' for all papers
+            if (e.key === 'a' || e.key === 'A') {
+                filterPapers('all');
+            }
+            
+            // Escape to show all
+            if (e.key === 'Escape') {
+                filterPapers('all');
+            }
         });
+        
+        // Highlight papers on hover
+        paperCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px)';
+                this.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = 'var(--shadow-md)';
+            });
+        });
+        
+        // Initialize with animation
+        setTimeout(() => {
+            paperCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+        }, 100);
     </script>
 </body>
 </html>
