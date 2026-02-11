@@ -3,28 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Papers | Anant Sharma</title>
+    <title>Physics & Mathematics Papers | Anant Sharma</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #ffffff;
-            --bg-secondary: #fafafa;
-            --bg-tertiary: #f0f0f0;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
             --text-primary: #111111;
             --text-secondary: #444444;
             --text-muted: #666666;
-            --border-color: #e0e0e0;
-            --accent-blue: #0066cc;
-            --accent-blue-light: #e6f0ff;
-            --accent-red: #cc3333;
-            --accent-green: #2e7d32;
-            --accent-purple: #7b1fa2;
-            --accent-orange: #f57c00;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
+            --border-color: #dee2e6;
+            --physics-color: #0066cc;
+            --physics-light: #e6f0ff;
+            --mathematics-color: #cc0066;
+            --mathematics-light: #ffe6f2;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.07);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
             --transition: all 0.2s ease;
         }
         
@@ -45,24 +43,17 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 32px;
+            padding: 0 24px;
         }
         
         /* Header */
         header {
-            padding: 3rem 0 2.5rem;
+            padding: 2.5rem 0 2rem;
             border-bottom: 1px solid var(--border-color);
             background: var(--bg-primary);
         }
         
-        .header-main {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 2rem;
-        }
-        
-        .header-text h1 {
+        .site-title {
             font-size: 2.25rem;
             font-weight: 700;
             letter-spacing: -0.02em;
@@ -70,160 +61,235 @@
             line-height: 1.1;
         }
         
-        .header-text p {
+        .site-subtitle {
             font-size: 1.125rem;
             color: var(--text-secondary);
-            max-width: 800px;
+            margin-bottom: 0.5rem;
         }
         
-        .paper-count {
-            font-family: 'Source Code Pro', monospace;
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
             font-size: 0.9rem;
             color: var(--text-muted);
-            padding: 0.5rem 1rem;
-            background: var(--bg-secondary);
-            border-radius: var(--radius-sm);
-            white-space: nowrap;
-        }
-        
-        /* Category Filter */
-        .category-filter {
-            display: flex;
             flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-            padding-bottom: 0.5rem;
         }
         
-        .filter-btn {
-            padding: 0.5rem 1.25rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
+        .breadcrumb a {
             color: var(--text-secondary);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
+            text-decoration: none;
             transition: var(--transition);
         }
         
-        .filter-btn:hover {
-            background: var(--bg-tertiary);
-            border-color: #ccc;
+        .breadcrumb a:hover {
+            color: var(--physics-color);
         }
         
-        .filter-btn.active {
-            background: var(--accent-blue);
-            color: white;
-            border-color: var(--accent-blue);
+        .breadcrumb-separator {
+            margin: 0 0.25rem;
         }
         
-        /* Papers Grid */
-        .papers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
+        /* Main Content Areas */
+        .main-content {
             padding: 2.5rem 0;
+            min-height: 60vh;
         }
         
-        .paper-card {
+        .content-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        
+        /* Home Page - Branch Selection */
+        .branch-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .branch-card {
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            padding: 1.5rem;
+            padding: 2.5rem 2rem;
             transition: var(--transition);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            cursor: pointer;
+            text-align: center;
         }
         
-        .paper-card:hover {
-            border-color: #ccc;
+        .branch-card:hover {
+            transform: translateY(-5px);
             box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
+        }
+        
+        .branch-card.physics {
+            border-top: 4px solid var(--physics-color);
+        }
+        
+        .branch-card.mathematics {
+            border-top: 4px solid var(--mathematics-color);
+        }
+        
+        .branch-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+        
+        .physics .branch-icon {
+            color: var(--physics-color);
+        }
+        
+        .mathematics .branch-icon {
+            color: var(--mathematics-color);
+        }
+        
+        .branch-name {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .branch-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* Sub-branch Grid */
+        .subbranch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .subbranch-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .subbranch-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: #ccc;
+        }
+        
+        .subbranch-card.physics {
+            border-left: 4px solid var(--physics-color);
+        }
+        
+        .subbranch-card.mathematics {
+            border-left: 4px solid var(--mathematics-color);
+        }
+        
+        .subbranch-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        
+        .subbranch-paper-count {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: 'Source Code Pro', monospace;
+            margin-top: 0.5rem;
+        }
+        
+        /* Papers List */
+        .papers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+        
+        .paper-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .paper-item:hover {
+            border-color: #ccc;
+            box-shadow: var(--shadow-sm);
         }
         
         .paper-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
         
         .paper-title {
             font-size: 1.125rem;
             font-weight: 600;
             line-height: 1.4;
-            margin-bottom: 0.75rem;
             color: var(--text-primary);
-        }
-        
-        .paper-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
+            flex: 1;
+            min-width: 300px;
         }
         
         .paper-year {
             font-family: 'Source Code Pro', monospace;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             font-weight: 500;
         }
         
-        .paper-category {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 100px;
-            font-weight: 500;
-        }
-        
-        .category-qft { background-color: rgba(0, 102, 204, 0.1); color: var(--accent-blue); }
-        .category-gr { background-color: rgba(204, 51, 51, 0.1); color: var(--accent-red); }
-        .category-math { background-color: rgba(46, 125, 50, 0.1); color: var(--accent-green); }
-        .category-string { background-color: rgba(123, 31, 162, 0.1); color: var(--accent-purple); }
-        .category-condensed { background-color: rgba(245, 124, 0, 0.1); color: var(--accent-orange); }
-        
         .paper-abstract {
             color: var(--text-secondary);
-            font-size: 0.875rem;
+            font-size: 0.95rem;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            margin-bottom: 1.25rem;
         }
         
         .paper-links {
             display: flex;
-            gap: 0.75rem;
-            margin-top: auto;
+            gap: 1rem;
         }
         
         .paper-link {
-            padding: 0.5rem 1rem;
+            padding: 0.625rem 1.25rem;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
             color: var(--text-primary);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.875rem;
             font-weight: 500;
             transition: var(--transition);
-            flex: 1;
-            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .paper-link:hover {
-            background: var(--accent-blue-light);
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
+            background: var(--physics-color);
+            color: white;
+            border-color: var(--physics-color);
         }
         
         .paper-link.pdf {
-            background: var(--accent-blue);
+            background: var(--physics-color);
             color: white;
-            border-color: var(--accent-blue);
+            border-color: var(--physics-color);
         }
         
         .paper-link.pdf:hover {
@@ -231,11 +297,43 @@
             border-color: #0055aa;
         }
         
+        .mathematics-section .paper-link.pdf {
+            background: var(--mathematics-color);
+            border-color: var(--mathematics-color);
+        }
+        
+        .mathematics-section .paper-link.pdf:hover {
+            background: #aa0055;
+            border-color: #aa0055;
+        }
+        
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+        
+        .back-button:hover {
+            background: var(--bg-tertiary);
+            border-color: #ccc;
+        }
+        
         /* Footer */
         footer {
-            padding: 2rem 0 3rem;
+            padding: 2.5rem 0;
             border-top: 1px solid var(--border-color);
-            margin-top: 2rem;
+            margin-top: 3rem;
             background: var(--bg-secondary);
         }
         
@@ -249,7 +347,7 @@
         
         .footer-text {
             color: var(--text-muted);
-            font-size: 0.875rem;
+            font-size: 0.9rem;
         }
         
         .footer-links {
@@ -260,53 +358,45 @@
         .footer-link {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: var(--transition);
         }
         
         .footer-link:hover {
-            color: var(--accent-blue);
-        }
-        
-        /* Empty State */
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-muted);
+            color: var(--physics-color);
         }
         
         /* Responsive */
-        @media (max-width: 1200px) {
-            .papers-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-        }
-        
         @media (max-width: 768px) {
             .container {
                 padding: 0 20px;
             }
             
-            .header-main {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .header-text h1 {
+            .site-title {
                 font-size: 1.875rem;
             }
             
-            .papers-grid {
+            .branch-selection {
                 grid-template-columns: 1fr;
-                gap: 1.25rem;
-                padding: 2rem 0;
             }
             
-            .category-filter {
-                overflow-x: auto;
-                padding-bottom: 1rem;
+            .subbranch-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .paper-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .paper-title {
+                min-width: 100%;
+            }
+            
+            .paper-links {
+                flex-direction: column;
             }
             
             .footer-content {
@@ -316,275 +406,96 @@
         }
         
         @media (max-width: 480px) {
-            .paper-links {
-                flex-direction: column;
-            }
-            
             .container {
                 padding: 0 16px;
             }
+            
+            .branch-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .subbranch-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
-        /* Print Styles */
-        @media print {
-            .category-filter, .footer-links {
-                display: none;
-            }
-            
-            .papers-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .paper-link {
-                display: none;
-            }
-            
-            .paper-link.pdf {
-                display: inline-block;
-            }
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease forwards;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="header-main">
-                <div class="header-text">
-                    <h1>Anant Sharma</h1>
-                    <p>A curated collection of self-contained notes based on standard textbooks and lectures. Each article develops a topic from first principles, with prerequisites explicitly provided when needed. Intended for students and self-learners seeking a coherent, structured approach. </p>
-                </div>
-                <div class="paper-count" id="paperCount">24 papers</div>
-            </div>
+            <h1 class="site-title">Anant Sharma</h1>
+            <p class="site-subtitle">Repository of Physics & Mathematics Expository Papers</p>
             
-            <div class="category-filter">
-                <button class="filter-btn active" data-filter="all">All Papers</button>
-                <button class="filter-btn" data-filter="qft">Quantum Field Theory</button>
-                <button class="filter-btn" data-filter="gr">General Relativity</button>
-                <button class="filter-btn" data-filter="string">String Theory</button>
-                <button class="filter-btn" data-filter="math">Mathematical Physics</button>
-                <button class="filter-btn" data-filter="condensed">Condensed Matter</button>
-                <button class="filter-btn" data-filter="quantum">Quantum Mechanics</button>
-                <button class="filter-btn" data-filter="statistical">Statistical Physics</button>
+            <div class="breadcrumb" id="breadcrumb">
+                <a href="#" class="breadcrumb-home">Home</a>
             </div>
         </header>
         
-        <main>
-            <div class="papers-grid" id="papersGrid">
-                <!-- Paper 1 -->
-                <div class="paper-card" data-category="qft">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Renormalization Group Methods in Quantum Field Theory</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2024</span>
-                            <span class="paper-category category-qft">QFT</span>
-                        </div>
+        <main class="main-content">
+            <!-- Home Page - Branch Selection -->
+            <div id="homePage" class="page">
+                <h2 class="content-title">Select a Branch</h2>
+                <div class="branch-selection">
+                    <div class="branch-card physics" data-branch="physics">
+                        <div class="branch-icon">⚛</div>
+                        <h3 class="branch-name">Physics</h3>
+                        <p class="branch-description">
+                            Expository papers covering classical mechanics, quantum mechanics, 
+                            statistical physics, field theory, relativity, and more.
+                        </p>
                     </div>
-                    <p class="paper-abstract">
-                        A comprehensive treatment of renormalization group flow, beta functions, and fixed points in quantum field theories with applications to critical phenomena.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/renormalization-group.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
-                </div>
-                
-                <!-- Paper 2 -->
-                <div class="paper-card" data-category="gr">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Mathematical Foundations of General Relativity</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2024</span>
-                            <span class="paper-category category-gr">GR</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Differential geometry, manifolds, connections, curvature tensors, and Einstein's field equations with detailed mathematical exposition.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/gr-foundations.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
+                    
+                    <div class="branch-card mathematics" data-branch="mathematics">
+                        <div class="branch-icon">∫∑∏</div>
+                        <h3 class="branch-name">Mathematics</h3>
+                        <p class="branch-description">
+                            Mathematical foundations including topology, algebra, analysis, 
+                            differential geometry, and specialized mathematical techniques.
+                        </p>
                     </div>
                 </div>
-                
-                <!-- Paper 3 -->
-                <div class="paper-card" data-category="string">
-                    <div class="paper-header">
-                        <h3 class="paper-title">AdS/CFT Correspondence: A Pedagogical Introduction</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2024</span>
-                            <span class="paper-category category-string">String Theory</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Duality between gravity in Anti-de Sitter space and conformal field theory on its boundary with examples and applications.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/ads-cft.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
+            </div>
+            
+            <!-- Physics Sub-branches -->
+            <div id="physicsPage" class="page" style="display: none;">
+                <a href="#" class="back-button" id="backFromPhysics">
+                    ← Back to Home
+                </a>
+                <h2 class="content-title">Physics - Select a Sub-branch</h2>
+                <div class="subbranch-grid">
+                    <!-- Physics sub-branches will be inserted here by JavaScript -->
                 </div>
-                
-                <!-- Paper 4 -->
-                <div class="paper-card" data-category="math">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Geometric Quantization of Classical Systems</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2023</span>
-                            <span class="paper-category category-math">Math Physics</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Symplectic manifolds, prequantization, polarization, and applications to quantization of classical Hamiltonian systems.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/geometric-quantization.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
+            </div>
+            
+            <!-- Mathematics Sub-branches -->
+            <div id="mathematicsPage" class="page" style="display: none;">
+                <a href="#" class="back-button" id="backFromMathematics">
+                    ← Back to Home
+                </a>
+                <h2 class="content-title">Mathematics - Select a Sub-branch</h2>
+                <div class="subbranch-grid">
+                    <!-- Mathematics sub-branches will be inserted here by JavaScript -->
                 </div>
-                
-                <!-- Paper 5 -->
-                <div class="paper-card" data-category="condensed">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Topological Insulators and Superconductors</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2023</span>
-                            <span class="paper-category category-condensed">Condensed Matter</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Classification of topological phases, bulk-boundary correspondence, and experimental realizations in condensed matter systems.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/topological-insulators.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
-                </div>
-                
-                <!-- Paper 6 -->
-                <div class="paper-card" data-category="qft">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Path Integral Formulation of Quantum Field Theory</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2023</span>
-                            <span class="paper-category category-qft">QFT</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Feynman path integrals, generating functionals, correlation functions, and connection to operator formalism.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/path-integral-qft.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
-                </div>
-                
-                <!-- Paper 7 -->
-                <div class="paper-card" data-category="gr">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Black Hole Thermodynamics and Hawking Radiation</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2023</span>
-                            <span class="paper-category category-gr">GR</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Laws of black hole mechanics, temperature, entropy, and quantum field theory in curved spacetime.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/black-hole-thermo.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
-                </div>
-                
-                <!-- Paper 8 -->
-                <div class="paper-card" data-category="quantum">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Foundations of Quantum Mechanics: Interpretations</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2022</span>
-                            <span class="paper-category category-qft">Quantum Mechanics</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Copenhagen, many-worlds, Bohmian, and relational interpretations with philosophical and mathematical analysis.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/quantum-interpretations.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
-                </div>
-                
-                <!-- Paper 9 -->
-                <div class="paper-card" data-category="string">
-                    <div class="paper-header">
-                        <h3 class="paper-title">String Theory Compactifications and Moduli Spaces</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2022</span>
-                            <span class="paper-category category-string">String Theory</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Calabi-Yau manifolds, orbifolds, flux compactifications, and stabilization of moduli in string phenomenology.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/string-compactifications.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
-                </div>
-                
-                <!-- Paper 10 -->
-                <div class="paper-card" data-category="statistical">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Critical Phenomena and Scaling Theory</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2022</span>
-                            <span class="paper-category category-qft">Statistical Physics</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Phase transitions, critical exponents, scaling laws, universality classes, and renormalization group approach.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/critical-phenomena.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
-                </div>
-                
-                <!-- Paper 11 -->
-                <div class="paper-card" data-category="math">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Algebraic Quantum Field Theory on Curved Spacetimes</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2022</span>
-                            <span class="paper-category category-math">Math Physics</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Operator algebras, local quantum physics, and generally covariant formulation of quantum field theory.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/aqft-curved.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
-                </div>
-                
-                <!-- Paper 12 -->
-                <div class="paper-card" data-category="condensed">
-                    <div class="paper-header">
-                        <h3 class="paper-title">Anyons and Fractional Statistics in Two Dimensions</h3>
-                        <div class="paper-meta">
-                            <span class="paper-year">2021</span>
-                            <span class="paper-category category-condensed">Condensed Matter</span>
-                        </div>
-                    </div>
-                    <p class="paper-abstract">
-                        Braid group statistics, fractional quantum Hall effect, and topological quantum computation.
-                    </p>
-                    <div class="paper-links">
-                        <a href="papers/anyons-statistics.pdf" class="paper-link pdf">PDF</a>
-                        <a href="#" class="paper-link">Abstract</a>
-                    </div>
+            </div>
+            
+            <!-- Papers List for a Sub-branch -->
+            <div id="papersPage" class="page" style="display: none;">
+                <a href="#" class="back-button" id="backFromPapers">
+                    ← Back to Sub-branches
+                </a>
+                <h2 class="content-title" id="papersTitle">Papers</h2>
+                <div class="papers-list" id="papersList">
+                    <!-- Papers will be inserted here by JavaScript -->
                 </div>
             </div>
         </main>
@@ -592,135 +503,370 @@
         <footer>
             <div class="footer-content">
                 <p class="footer-text">
-                    &copy; 2024 Anant Sharma. All papers available under 
-                    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" style="color: var(--accent-blue);">CC BY 4.0</a>.
+                    &copy; 2024 Anant Sharma. All papers available for educational use.
                 </p>
                 <div class="footer-links">
                     <a href="https://github.com/yourusername" target="_blank" class="footer-link">GitHub</a>
-                    <a href="mailto:physics@example.com" class="footer-link">Email</a>
-                    <a href="#all" class="footer-link" id="showAll">Show All Papers</a>
+                    <a href="mailto:physics.math@example.com" class="footer-link">Email</a>
+                    <a href="#home" class="footer-link" id="homeLink">Home</a>
                 </div>
             </div>
         </footer>
     </div>
 
     <script>
-        // Paper filtering functionality
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const paperCards = document.querySelectorAll('.paper-card');
-        const paperCount = document.getElementById('paperCount');
-        const showAllLink = document.getElementById('showAll');
+        // Data structure for the entire repository
+        const repository = {
+            physics: {
+                name: "Physics",
+                color: "var(--physics-color)",
+                subbranches: {
+                    "classical-mechanics": {
+                        name: "Classical Mechanics",
+                        papers: [
+                            { title: "Lagrangian Formulation of Classical Mechanics", year: "2024", abstract: "Derivation of Euler-Lagrange equations, generalized coordinates, and applications to mechanical systems.", pdf: "papers/physics/classical/lagrangian-formulation.pdf" },
+                            { title: "Hamiltonian Mechanics and Poisson Brackets", year: "2024", abstract: "Canonical transformations, Hamilton's equations, and symplectic structure of phase space.", pdf: "papers/physics/classical/hamiltonian-mechanics.pdf" },
+                            { title: "Rigid Body Dynamics and Euler's Equations", year: "2023", abstract: "Rotation matrices, moments of inertia, and equations of motion for rigid bodies.", pdf: "papers/physics/classical/rigid-body-dynamics.pdf" },
+                            { title: "Small Oscillations and Normal Modes", year: "2023", abstract: "Linearization of equations of motion, eigenvalue problems, and normal coordinates.", pdf: "papers/physics/classical/normal-modes.pdf" }
+                        ]
+                    },
+                    "statistical-mechanics": {
+                        name: "Statistical Mechanics",
+                        papers: [
+                            { title: "Foundations of Statistical Mechanics", year: "2024", abstract: "Microstates, macrostates, fundamental postulate, and ergodic hypothesis.", pdf: "papers/physics/statistical/foundations.pdf" },
+                            { title: "Ensemble Theory: Microcanonical, Canonical, Grand Canonical", year: "2024", abstract: "Different statistical ensembles and their applications to physical systems.", pdf: "papers/physics/statistical/ensemble-theory.pdf" },
+                            { title: "Phase Transitions and Critical Phenomena", year: "2023", abstract: "Critical exponents, scaling laws, and Landau theory of phase transitions.", pdf: "papers/physics/statistical/phase-transitions.pdf" }
+                        ]
+                    },
+                    "thermodynamics": {
+                        name: "Thermodynamics",
+                        papers: [
+                            { title: "Laws of Thermodynamics and Their Consequences", year: "2024", abstract: "Zeroth, first, second, and third laws with mathematical formulations.", pdf: "papers/physics/thermodynamics/laws.pdf" },
+                            { title: "Thermodynamic Potentials and Maxwell Relations", year: "2023", abstract: "Internal energy, enthalpy, Helmholtz and Gibbs free energies, and their interrelations.", pdf: "papers/physics/thermodynamics/potentials.pdf" }
+                        ]
+                    },
+                    "quantum-mechanics": {
+                        name: "Quantum Mechanics",
+                        papers: [
+                            { title: "Mathematical Foundations of Quantum Mechanics", year: "2024", abstract: "Hilbert spaces, operators, eigenvalues, and the spectral theorem.", pdf: "papers/physics/quantum/foundations.pdf" },
+                            { title: "Time-Independent Perturbation Theory", year: "2024", abstract: "Non-degenerate and degenerate perturbation theory with applications.", pdf: "papers/physics/quantum/perturbation-theory.pdf" },
+                            { title: "Angular Momentum in Quantum Mechanics", year: "2023", abstract: "Commutation relations, ladder operators, and spherical harmonics.", pdf: "papers/physics/quantum/angular-momentum.pdf" },
+                            { title: "Scattering Theory in Quantum Mechanics", year: "2023", abstract: "Partial wave analysis, Born approximation, and scattering cross sections.", pdf: "papers/physics/quantum/scattering-theory.pdf" }
+                        ]
+                    },
+                    "condensed-matter": {
+                        name: "Condensed Matter Physics",
+                        papers: [
+                            { title: "Band Theory of Solids", year: "2024", abstract: "Nearly free electron model, tight-binding approximation, and band structure.", pdf: "papers/physics/condensed/band-theory.pdf" },
+                            { title: "Superconductivity: BCS Theory", year: "2024", abstract: "Cooper pairs, energy gap, and microscopic theory of superconductors.", pdf: "papers/physics/condensed/bcs-theory.pdf" }
+                        ]
+                    },
+                    "quantum-field-theory": {
+                        name: "Quantum Field Theory",
+                        papers: [
+                            { title: "Canonical Quantization of Scalar Fields", year: "2024", abstract: "Klein-Gordon equation, creation/annihilation operators, and Fock space.", pdf: "papers/physics/qft/scalar-fields.pdf" },
+                            { title: "Path Integral Formulation of Quantum Field Theory", year: "2024", abstract: "Generating functionals, correlation functions, and Feynman diagrams.", pdf: "papers/physics/qft/path-integral.pdf" },
+                            { title: "Renormalization and Running Couplings", year: "2023", abstract: "UV divergences, regularization, renormalization group equations.", pdf: "papers/physics/qft/renormalization.pdf" }
+                        ]
+                    },
+                    "general-relativity": {
+                        name: "General Relativity",
+                        papers: [
+                            { title: "Differential Geometry for General Relativity", year: "2024", abstract: "Manifolds, connections, curvature tensor, and Riemannian geometry.", pdf: "papers/physics/gr/differential-geometry.pdf" },
+                            { title: "Einstein Field Equations and Their Solutions", year: "2024", abstract: "Derivation of field equations, Schwarzschild solution, and black holes.", pdf: "papers/physics/gr/einstein-equations.pdf" },
+                            { title: "Gravitational Waves in Linearized Gravity", year: "2023", abstract: "Linearized Einstein equations, transverse traceless gauge, and wave solutions.", pdf: "papers/physics/gravitational-waves.pdf" }
+                        ]
+                    },
+                    "electromagnetism": {
+                        name: "Electromagnetism",
+                        papers: [
+                            { title: "Maxwell's Equations in Differential Form", year: "2024", abstract: "Vector calculus formulation, boundary conditions, and conservation laws.", pdf: "papers/physics/em/maxwell-equations.pdf" },
+                            { title: "Electromagnetic Waves in Vacuum and Media", year: "2023", abstract: "Wave equation, polarization, reflection and refraction at interfaces.", pdf: "papers/physics/em/waves.pdf" }
+                        ]
+                    },
+                    "waves-optics": {
+                        name: "Waves and Optics",
+                        papers: [
+                            { title: "Wave Equation and Its Solutions", year: "2024", abstract: "D'Alembert's solution, separation of variables, and Fourier methods.", pdf: "papers/physics/waves/wave-equation.pdf" },
+                            { title: "Geometrical Optics and Ray Tracing", year: "2023", abstract: "Fermat's principle, Snell's law, and matrix methods in optics.", pdf: "papers/physics/waves/geometrical-optics.pdf" }
+                        ]
+                    }
+                }
+            },
+            
+            mathematics: {
+                name: "Mathematics",
+                color: "var(--mathematics-color)",
+                subbranches: {
+                    "point-set-topology": {
+                        name: "Point Set Topology",
+                        papers: [
+                            { title: "Topological Spaces: Definitions and Examples", year: "2024", abstract: "Open sets, closed sets, bases, and examples of topological spaces.", pdf: "papers/math/topology/topological-spaces.pdf" },
+                            { title: "Compactness and Connectedness", year: "2024", abstract: "Heine-Borel theorem, sequential compactness, and path connectedness.", pdf: "papers/math/topology/compactness.pdf" }
+                        ]
+                    },
+                    "algebraic-topology": {
+                        name: "Algebraic Topology",
+                        papers: [
+                            { title: "Fundamental Group and Covering Spaces", year: "2024", abstract: "Homotopy, fundamental group calculations, and universal covers.", pdf: "papers/math/topology/fundamental-group.pdf" },
+                            { title: "Homology Theory: Singular Homology", year: "2023", abstract: "Chain complexes, boundary operators, and homology groups.", pdf: "papers/math/topology/homology-theory.pdf" }
+                        ]
+                    },
+                    "abstract-algebra": {
+                        name: "Abstract Algebra",
+                        papers: [
+                            { title: "Group Theory: Definitions and Theorems", year: "2024", abstract: "Groups, subgroups, normal subgroups, and quotient groups.", pdf: "papers/math/algebra/group-theory.pdf" },
+                            { title: "Ring Theory and Field Theory", year: "2024", abstract: "Rings, ideals, integral domains, and field extensions.", pdf: "papers/math/algebra/ring-theory.pdf" }
+                        ]
+                    },
+                    "linear-algebra": {
+                        name: "Linear and Multilinear Algebra",
+                        papers: [
+                            { title: "Vector Spaces and Linear Transformations", year: "2024", abstract: "Basis, dimension, rank-nullity theorem, and matrix representations.", pdf: "papers/math/algebra/linear-algebra.pdf" },
+                            { title: "Tensor Products and Exterior Algebra", year: "2023", abstract: "Multilinear maps, tensor products, wedge products, and determinants.", pdf: "papers/math/algebra/tensor-algebra.pdf" }
+                        ]
+                    },
+                    "differential-geometry": {
+                        name: "Differential Geometry",
+                        papers: [
+                            { title: "Manifolds and Tangent Spaces", year: "2024", abstract: "Smooth manifolds, charts, atlases, and tangent vectors.", pdf: "papers/math/geometry/manifolds.pdf" },
+                            { title: "Riemannian Metrics and Curvature", year: "2024", abstract: "Metric tensor, Levi-Civita connection, and curvature tensors.", pdf: "papers/math/geometry/riemannian-geometry.pdf" }
+                        ]
+                    },
+                    "exterior-calculus": {
+                        name: "Exterior Calculus",
+                        papers: [
+                            { title: "Differential Forms and Exterior Derivative", year: "2024", abstract: "Differential forms, wedge product, and exterior derivative.", pdf: "papers/math/calculus/differential-forms.pdf" },
+                            { title: "Stokes' Theorem in Multiple Dimensions", year: "2023", abstract: "Generalized Stokes' theorem and applications to integration.", pdf: "papers/math/calculus/stokes-theorem.pdf" }
+                        ]
+                    },
+                    "vector-analysis": {
+                        name: "Vector Analysis",
+                        papers: [
+                            { title: "Gradient, Divergence, and Curl Operations", year: "2024", abstract: "Vector calculus operations in Cartesian and curvilinear coordinates.", pdf: "papers/math/calculus/vector-operators.pdf" },
+                            { title: "Integral Theorems: Green, Gauss, Stokes", year: "2023", abstract: "Divergence theorem, Stokes' theorem, and Green's identities.", pdf: "papers/math/calculus/integral-theorems.pdf" }
+                        ]
+                    },
+                    "complex-analysis": {
+                        name: "Complex Analysis",
+                        papers: [
+                            { title: "Analytic Functions and Cauchy-Riemann Equations", year: "2024", abstract: "Holomorphic functions, Cauchy-Riemann conditions, and harmonic functions.", pdf: "papers/math/analysis/complex-analytic.pdf" },
+                            { title: "Cauchy's Integral Theorem and Formula", year: "2024", abstract: "Contour integration, residue theorem, and evaluation of integrals.", pdf: "papers/math/analysis/cauchy-integral.pdf" }
+                        ]
+                    },
+                    "ordinary-differential-equations": {
+                        name: "Ordinary Differential Equations",
+                        papers: [
+                            { title: "Existence and Uniqueness Theorems", year: "2024", abstract: "Picard-Lindelöf theorem and dependence on initial conditions.", pdf: "papers/math/ode/existence-uniqueness.pdf" },
+                            { title: "Linear Systems and Phase Plane Analysis", year: "2023", abstract: "Matrix exponentials, stability analysis, and phase portraits.", pdf: "papers/math/ode/linear-systems.pdf" }
+                        ]
+                    },
+                    "partial-differential-equations": {
+                        name: "Partial Differential Equations",
+                        papers: [
+                            { title: "Classification of Second-Order PDEs", year: "2024", abstract: "Elliptic, parabolic, and hyperbolic equations with examples.", pdf: "papers/math/pde/classification.pdf" },
+                            { title: "Heat Equation: Fourier Series Solution", year: "2024", abstract: "Separation of variables, Fourier series, and boundary value problems.", pdf: "papers/math/pde/heat-equation.pdf" },
+                            { title: "Wave Equation: D'Alembert's Solution", year: "2024", abstract: "General solution, characteristics, and initial value problems.", pdf: "papers/math/pde/wave-equation.pdf" },
+                            { title: "Laplace's Equation and Potential Theory", year: "2023", abstract: "Harmonic functions, maximum principle, and Green's functions.", pdf: "papers/math/pde/laplace-equation.pdf" }
+                        ]
+                    },
+                    "special-functions": {
+                        name: "Special Functions",
+                        papers: [
+                            { title: "Orthogonal Polynomials: Legendre, Hermite, Laguerre", year: "2024", abstract: "Rodrigues formulas, recurrence relations, and orthogonality.", pdf: "papers/math/functions/orthogonal-polynomials.pdf" },
+                            { title: "Bessel Functions and Their Properties", year: "2023", abstract: "Bessel's equation, recurrence relations, and integral representations.", pdf: "papers/math/functions/bessel-functions.pdf" }
+                        ]
+                    },
+                    "integral-transforms": {
+                        name: "Integral Transforms",
+                        papers: [
+                            { title: "Fourier Transform: Properties and Applications", year: "2024", abstract: "Definition, inversion theorem, and convolution property.", pdf: "papers/math/transforms/fourier-transform.pdf" },
+                            { title: "Laplace Transform: Solving ODEs", year: "2023", abstract: "Definition, properties, and applications to differential equations.", pdf: "papers/math/transforms/laplace-transform.pdf" }
+                        ]
+                    },
+                    "fourier-analysis": {
+                        name: "Fourier Analysis",
+                        papers: [
+                            { title: "Fourier Series: Convergence Theorems", year: "2024", abstract: "Dirichlet conditions, Gibbs phenomenon, and uniform convergence.", pdf: "papers/math/analysis/fourier-series.pdf" },
+                            { title: "Discrete Fourier Transform and FFT", year: "2023", abstract: "DFT algorithm, computational complexity, and applications.", pdf: "papers/math/analysis/discrete-fourier.pdf" }
+                        ]
+                    }
+                }
+            }
+        };
+
+        // DOM Elements
+        const pages = {
+            home: document.getElementById('homePage'),
+            physics: document.getElementById('physicsPage'),
+            mathematics: document.getElementById('mathematicsPage'),
+            papers: document.getElementById('papersPage')
+        };
         
-        // Update paper count
-        function updatePaperCount() {
-            const visiblePapers = document.querySelectorAll('.paper-card:not(.hidden)').length;
-            paperCount.textContent = `${visiblePapers} papers`;
+        const breadcrumb = document.getElementById('breadcrumb');
+        const papersTitle = document.getElementById('papersTitle');
+        const papersList = document.getElementById('papersList');
+        const homeLink = document.getElementById('homeLink');
+        
+        // Current navigation state
+        let currentState = {
+            branch: null,
+            subbranch: null
+        };
+        
+        // Initialize the website
+        function init() {
+            // Add event listeners for branch selection
+            document.querySelectorAll('.branch-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const branch = this.dataset.branch;
+                    showBranchPage(branch);
+                });
+            });
+            
+            // Back buttons
+            document.getElementById('backFromPhysics').addEventListener('click', showHomePage);
+            document.getElementById('backFromMathematics').addEventListener('click', showHomePage);
+            document.getElementById('backFromPapers').addEventListener('click', function() {
+                if (currentState.branch) {
+                    showBranchPage(currentState.branch);
+                } else {
+                    showHomePage();
+                }
+            });
+            
+            // Home link in footer
+            homeLink.addEventListener('click', showHomePage);
+            
+            // Show home page initially
+            showHomePage();
         }
         
-        // Filter papers by category
-        function filterPapers(category) {
-            paperCards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.classList.remove('hidden');
-                    card.style.display = 'flex';
-                } else {
-                    card.classList.add('hidden');
-                    card.style.display = 'none';
-                }
-            });
+        // Show home page
+        function showHomePage() {
+            // Hide all pages
+            Object.values(pages).forEach(page => page.style.display = 'none');
             
-            // Update active button
-            filterButtons.forEach(btn => {
-                if (btn.dataset.filter === category) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
+            // Show home page
+            pages.home.style.display = 'block';
             
-            updatePaperCount();
+            // Update breadcrumb
+            updateBreadcrumb([{ name: 'Home', action: showHomePage }]);
             
-            // Scroll to top of grid
-            document.getElementById('papersGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Reset current state
+            currentState = { branch: null, subbranch: null };
+            
+            // Add animation
+            pages.home.classList.add('fade-in');
         }
         
-        // Event listeners for filter buttons
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const category = button.dataset.filter;
-                filterPapers(category);
-            });
-        });
-        
-        // Show all papers link
-        showAllLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            filterPapers('all');
-        });
-        
-        // Paper link handling
-        document.querySelectorAll('.paper-link:not(.pdf)').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const paperCard = this.closest('.paper-card');
-                const title = paperCard.querySelector('.paper-title').textContent;
-                const abstract = paperCard.querySelector('.paper-abstract').textContent;
+        // Show branch page (Physics or Mathematics)
+        function showBranchPage(branch) {
+            // Hide all pages
+            Object.values(pages).forEach(page => page.style.display = 'none');
+            
+            // Show the selected branch page
+            pages[branch].style.display = 'block';
+            
+            // Update current state
+            currentState.branch = branch;
+            currentState.subbranch = null;
+            
+            // Update breadcrumb
+            updateBreadcrumb([
+                { name: 'Home', action: showHomePage },
+                { name: repository[branch].name, action: () => showBranchPage(branch) }
+            ]);
+            
+            // Populate sub-branches
+            const subbranchGrid = pages[branch].querySelector('.subbranch-grid');
+            subbranchGrid.innerHTML = '';
+            
+            const subbranches = repository[branch].subbranches;
+            
+            for (const [key, subbranch] of Object.entries(subbranches)) {
+                const card = document.createElement('div');
+                card.className = `subbranch-card ${branch}`;
+                card.dataset.key = key;
                 
-                // Show abstract in alert (or replace with modal)
-                alert(`Abstract: ${abstract}`);
-            });
-        });
-        
-        // Initialize
-        updatePaperCount();
-        
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            // Number keys 1-8 for quick filtering
-            if (e.key >= '1' && e.key <= '8') {
-                const index = parseInt(e.key) - 1;
-                if (index < filterButtons.length) {
-                    filterButtons[index].click();
-                }
-            }
-            
-            // 'a' for all papers
-            if (e.key === 'a' || e.key === 'A') {
-                filterPapers('all');
-            }
-            
-            // Escape to show all
-            if (e.key === 'Escape') {
-                filterPapers('all');
-            }
-        });
-        
-        // Highlight papers on hover
-        paperCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-4px)';
-                this.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(-2px)';
-                this.style.boxShadow = 'var(--shadow-md)';
-            });
-        });
-        
-        // Initialize with animation
-        setTimeout(() => {
-            paperCards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
+                card.innerHTML = `
+                    <h3 class="subbranch-name">${subbranch.name}</h3>
+                    <p class="subbranch-description">Papers on various topics within ${subbranch.name.toLowerCase()}.</p>
+                    <div class="subbranch-paper-count">${subbranch.papers.length} papers</div>
+                `;
                 
-                setTimeout(() => {
-                    card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 50);
+                card.addEventListener('click', function() {
+                    const subbranchKey = this.dataset.key;
+                    showPapersPage(branch, subbranchKey);
+                });
+                
+                subbranchGrid.appendChild(card);
+            }
+            
+            // Add animation
+            pages[branch].classList.add('fade-in');
+        }
+        
+        // Show papers for a specific sub-branch
+        function showPapersPage(branch, subbranchKey) {
+            // Hide all pages
+            Object.values(pages).forEach(page => page.style.display = 'none');
+            
+            // Show papers page
+            pages.papers.style.display = 'block';
+            
+            // Update current state
+            currentState.branch = branch;
+            currentState.subbranch = subbranchKey;
+            
+            // Get sub-branch data
+            const subbranch = repository[branch].subbranches[subbranchKey];
+            
+            // Update title
+            papersTitle.textContent = `${repository[branch].name} - ${subbranch.name}`;
+            
+            // Update breadcrumb
+            updateBreadcrumb([
+                { name: 'Home', action: showHomePage },
+                { name: repository[branch].name, action: () => showBranchPage(branch) },
+                { name: subbranch.name, action: () => showPapersPage(branch, subbranchKey) }
+            ]);
+            
+            // Clear previous papers
+            papersList.innerHTML = '';
+            
+            // Add papers
+            subbranch.papers.forEach((paper, index) => {
+                const paperItem = document.createElement('div');
+                paperItem.className = 'paper-item';
+                
+                paperItem.innerHTML = `
+                    <div class="paper-header">
+                        <h3 class="paper-title">${paper.title}</h3>
+                        <span class="paper-year">${paper.year}</span>
+                    </div>
+                    <p class="paper-abstract">${paper.abstract}</p>
+                    <div class="paper-links">
+                        <a href="${paper.pdf}" class="paper-link pdf" target="_blank">Download PDF</a>
+                        <a href="#" class="paper-link abstract-btn">Abstract</a>
+                    </div>
+                `;
+                
+                // Add abstract button functionality
+                const abstractBtn = paperItem.querySelector('.abstract-btn');
+                abstractBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert(`Abstract: ${paper.abstract}`);
+                });
+                
+                papersList.appendChild(paperItem);
             });
-        }, 100);
-    </script>
-</body>
-</html>
+            
+            // Add animation to papers
+            setTimeout(() => {
+                const paperItems = papersList.querySelectorAll('.paper-item');
+                paperItems.forEach((item, index) => {
+                    item.style.animationDelay = `${index * 0.05}s`;
+                    item.classList.add('fade-in');
+                });
+            }, 100);
