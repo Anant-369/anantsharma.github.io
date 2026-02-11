@@ -870,3 +870,52 @@
                     item.classList.add('fade-in');
                 });
             }, 100);
+        }
+        
+        // Update breadcrumb navigation
+        function updateBreadcrumb(items) {
+            breadcrumb.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = item.name;
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    item.action();
+                });
+                
+                breadcrumb.appendChild(link);
+                
+                // Add separator if not the last item
+                if (index < items.length - 1) {
+                    const separator = document.createElement('span');
+                    separator.className = 'breadcrumb-separator';
+                    separator.textContent = '/';
+                    breadcrumb.appendChild(separator);
+                }
+            });
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            // Escape key goes back
+            if (e.key === 'Escape') {
+                if (currentState.subbranch) {
+                    showBranchPage(currentState.branch);
+                } else if (currentState.branch) {
+                    showHomePage();
+                }
+            }
+            
+            // 'H' key goes home
+            if (e.key === 'h' || e.key === 'H') {
+                showHomePage();
+            }
+        });
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
